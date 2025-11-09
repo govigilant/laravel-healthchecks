@@ -1,0 +1,67 @@
+{
+    "name": "govigilant/vigilant-laravel-healthchecks",
+    "description": "A Laravel package to integrate Vigilant healthchecks",
+    "keywords": [
+        "vigilant",
+        "laravel",
+        "healthchecks"
+    ],
+    "homepage": "https://govigilant.io",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Vincent Bean",
+            "email": "vincent@govigilant.io",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "illuminate/contracts": "^11.0|^12.0",
+        "govigilant/vigilant-healthchecks-base": "dev-main"
+    },
+    "require-dev": {
+        "larastan/larastan": "^3.0",
+        "laravel/pint": "^1.7",
+        "orchestra/testbench": "^10.0",
+        "pestphp/pest-plugin-laravel": "^3.0",
+        "phpstan/phpstan-mockery": "^2.0",
+        "phpunit/phpunit": "^11.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Vigilant\\Healthchecks\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Vigilant\\Healthchecks\\Tests\\": "tests"
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Vigilant\\Healthchecks\\ServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "test": "phpunit",
+        "analyse": "phpstan",
+        "style": "pint --test",
+        "quality": [
+            "@test",
+            "@analyse",
+            "@style"
+        ],
+        "fix-style": "pint"
+    }
+}
