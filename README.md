@@ -6,7 +6,6 @@ A package to integrate [Vigilant](https://github.com/govigilant/vigilant)'s heal
 
 - 🔍 **Health Checks**: Monitor databases, cache, queues, Redis, Horizon, scheduler, and more
 - 📊 **System Metrics**: Track CPU, memory, disk usage, and database size
-- 🛠️ **Customizable**: Add custom checks and middleware
 
 ## Installation
 
@@ -48,34 +47,33 @@ Once installed, the health check endpoint is available with your configured toke
 POST /api/vigilant/health
 ```
 
-### Basic Configuration
+### Registering Checks and Metrics
 
-Configure checks and metrics in `config/vigilant-healthchecks.php`:
+Register health checks and metrics in your `AppServiceProvider`'s `boot` method:
 
 ```php
+use Vigilant\Healthchecks\Facades\HealthCheck;
 use Vigilant\Healthchecks\Checks\DatabaseCheck;
 use Vigilant\Healthchecks\Checks\CacheCheck;
 use Vigilant\Healthchecks\Checks\RedisCheck;
+use Vigilant\Healthchecks\Checks\HorizonCheck;
+use Vigilant\Healthchecks\Checks\SchedulerCheck;
 use Vigilant\Healthchecks\Checks\Metrics\CpuLoadMetric;
 use Vigilant\Healthchecks\Checks\Metrics\MemoryUsageMetric;
+use Vigilant\Healthchecks\Checks\Metrics\DiskUsageMetric;
 
-return [
-    'checks' => [
-        DatabaseCheck::make(),
-        CacheCheck::make(),
-        RedisCheck::make(),
-        HorizonCheck::make(),
-        SchedulerCheck::make(),
-    ],
+public function boot(): void
+{
+    HealthCheck::registerCheck(DatabaseCheck::make());
+    HealthCheck::registerCheck(CacheCheck::make());
+    HealthCheck::registerCheck(RedisCheck::make());
+    HealthCheck::registerCheck(HorizonCheck::make());
+    HealthCheck::registerCheck(SchedulerCheck::make());
 
-    'metrics' => [
-        CpuLoadMetric::make(),
-        MemoryUsageMetric::make(),
-        DiskUsageMetric::make(),
-    ],
-
-    'schedule' => true,
-];
+    HealthCheck::registerMetric(CpuLoadMetric::make());
+    HealthCheck::registerMetric(MemoryUsageMetric::make());
+    HealthCheck::registerMetric(DiskUsageMetric::make());
+}
 ```
 
 ### Configuring Specific Connections
@@ -83,31 +81,31 @@ return [
 Check specific database connections, cache stores, or Redis connections:
 
 ```php
+use Vigilant\Healthchecks\Facades\HealthCheck;
 use Vigilant\Healthchecks\Checks\DatabaseCheck;
 use Vigilant\Healthchecks\Checks\CacheCheck;
 use Vigilant\Healthchecks\Checks\RedisCheck;
 
-return [
-    'checks' => [
-        // Check default database connection
-        DatabaseCheck::make(),
+public function boot(): void
+{
+    // Check default database connection
+    HealthCheck::registerCheck(DatabaseCheck::make());
 
-        // Check a specific database connection
-        DatabaseCheck::configure('mysql'),
+    // Check a specific database connection
+    HealthCheck::registerCheck(DatabaseCheck::make()->connection('mysql'));
 
-        // Check default cache store
-        CacheCheck::make(),
+    // Check default cache store
+    HealthCheck::registerCheck(CacheCheck::make());
 
-        // Check a specific cache store
-        CacheCheck::configure('redis'),
+    // Check a specific cache store
+    HealthCheck::registerCheck(CacheCheck::make()->store('redis'));
 
-        // Check default Redis connection
-        RedisCheck::make(),
+    // Check default Redis connection
+    HealthCheck::registerCheck(RedisCheck::make());
 
-        // Check a specific Redis connection
-        RedisCheck::configure('sessions'),
-    ],
-];
+    // Check a specific Redis connection
+    HealthCheck::registerCheck(RedisCheck::make()->connection('sessions'));
+}
 ```
 
 ## Available Checks

@@ -10,10 +10,12 @@ class HealthController extends Controller
 {
     public function __invoke(BuildResponse $builder): JsonResponse
     {
+        $registry = app('vigilant.healthcheck');
+
         return response()->json(
             $builder->build(
-                config()->get('vigilant-healthchecks.checks', []),
-                config()->get('vigilant-healthchecks.metrics', [])
+                $registry->getChecks(),
+                $registry->getMetrics()
             )
         );
     }

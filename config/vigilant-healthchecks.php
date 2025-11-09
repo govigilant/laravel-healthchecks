@@ -1,52 +1,20 @@
 <?php
 
-use Vigilant\Healthchecks\Checks\CacheCheck;
-use Vigilant\Healthchecks\Checks\DatabaseCheck;
-use Vigilant\Healthchecks\Checks\DebugModeCheck;
-use Vigilant\Healthchecks\Checks\DiskSpaceCheck;
-use Vigilant\Healthchecks\Checks\EnvCheck;
-use Vigilant\Healthchecks\Checks\HorizonCheck;
-use Vigilant\Healthchecks\Checks\Metrics\CpuLoadMetric;
-use Vigilant\Healthchecks\Checks\Metrics\DatabaseSizeMetric;
-use Vigilant\Healthchecks\Checks\Metrics\DiskUsageMetric;
-use Vigilant\Healthchecks\Checks\Metrics\LogFileSizeMetric;
-use Vigilant\Healthchecks\Checks\Metrics\MemoryUsageMetric;
-use Vigilant\Healthchecks\Checks\QueueCheck;
-use Vigilant\Healthchecks\Checks\RedisCheck;
-use Vigilant\Healthchecks\Checks\RedisMemoryCheck;
-use Vigilant\Healthchecks\Checks\SchedulerCheck;
-use Vigilant\Healthchecks\Checks\StorageCheck;
 use Vigilant\Healthchecks\Http\Middleware\AuthenticateMiddleware;
 
 return [
-    'checks' => [
-        CacheCheck::make(),
-        DatabaseCheck::make(),
-        DebugModeCheck::make(),
-        DiskSpaceCheck::make(),
-        EnvCheck::make(),
-        HorizonCheck::make(),
-        QueueCheck::make(),
-        RedisCheck::make(),
-        RedisMemoryCheck::make(),
-        SchedulerCheck::make(),
-        StorageCheck::make(),
 
-    ],
+    /* Register all the default checks and metrics */
+    'register' => true,
 
-    'metrics' => [
-        DiskUsageMetric::make(),
-        CpuLoadMetric::make(),
-        MemoryUsageMetric::make(),
-        DatabaseSizeMetric::make(),
-        LogFileSizeMetric::make(),
-    ],
-
+    /* Middleware to protect the healthcheck route */
     'middleware' => [
         AuthenticateMiddleware::class,
     ],
 
+    /* Token to authenticate incoming healthcheck requests */
     'token' => env('VIGILANT_HEALTHCHECK_TOKEN'),
 
+    /* Enable scheduler for heartbeats */
     'schedule' => true,
 ];

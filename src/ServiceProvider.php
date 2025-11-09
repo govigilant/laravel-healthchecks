@@ -7,14 +7,27 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Vigilant\Healthchecks\Checks\QueueCheck;
 use Vigilant\Healthchecks\Jobs\QueueHeartbeatJob;
-use Vigilant\HealthChecksBase\Data\CheckConfigData;
 
 class ServiceProvider extends BaseServiceProvider
 {
     public function register(): void
     {
         $this
+            ->registerSingleton()
             ->registerConfig();
+    }
+
+    protected function registerSingleton(): static
+    {
+        $this->app->singleton('vigilant.healthcheck', function () {
+            return new HealthCheckRegistry;
+        });
+
+        $this->app->singleton(HealthCheckRegistry::class, function ($app) {
+            return $app->make('vigilant.healthcheck');
+        });
+
+        return $this;
     }
 
     protected function registerConfig(): static
@@ -31,7 +44,8 @@ class ServiceProvider extends BaseServiceProvider
             ->bootConfig()
             ->bootMigrations()
             ->bootCommands()
-            ->bootSchedule();
+            ->bootSchedule()
+            ->bootRegistrations();
     }
 
     protected function bootRoutes(): static
@@ -87,13 +101,54 @@ class ServiceProvider extends BaseServiceProvider
         return $this;
     }
 
+    protected function bootRegistrations(): static
+    {
+        if (! config('vigilant-healthchecks.register', true)) {
+            return $this;
+        }
+
+        $registry = app('vigilant.healthcheck');
+
+        $checks = [
+            Checks\DatabaseCheck::class,
+            Checks\QueueCheck::class,
+            Checks\CacheCheck::class,
+            Checks\RedisCheck::class,
+            Checks\RedisMemoryCheck::class,
+            Checks\StorageCheck::class,
+            Checks\DebugModeCheck::class,
+            Checks\HorizonCheck::class,
+            Checks\EnvCheck::class,
+            Checks\SchedulerCheck::class,
+            Checks\DiskSpaceCheck::class,
+        ];
+
+        foreach ($checks as $checkClass) {
+            $registry->registerCheck(new $checkClass);
+        }
+
+        $metrics = [
+            Checks\Metrics\MemoryUsageMetric::class,
+            Checks\Metrics\CpuLoadMetric::class,
+            Checks\Metrics\DiskUsageMetric::class,
+            Checks\Metrics\DatabaseSizeMetric::class,
+            Checks\Metrics\LogFileSizeMetric::class,
+        ];
+
+        foreach ($metrics as $metricClass) {
+            $registry->registerMetric(new $metricClass);
+        }
+
+        return $this;
+    }
+
     protected function isCheckConfigured(string $checkClass): bool
     {
-        $checks = config('vigilant-healthchecks.checks', []);
+        $registry = app('vigilant.healthcheck');
+        $checks = $registry->getChecks();
 
-        /** @var CheckConfigData $check */
         foreach ($checks as $check) {
-            if ($check->class === $checkClass) {
+            if ($check instanceof $checkClass) {
                 return true;
             }
         }

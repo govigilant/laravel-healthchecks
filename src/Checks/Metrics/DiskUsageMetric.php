@@ -3,10 +3,10 @@
 namespace Vigilant\Healthchecks\Checks\Metrics;
 
 use Throwable;
-use Vigilant\HealthChecksBase\Checks\MetricCheck;
+use Vigilant\HealthChecksBase\Checks\Metric;
 use Vigilant\HealthChecksBase\Data\MetricData;
 
-class DiskUsageMetric extends MetricCheck
+class DiskUsageMetric extends Metric
 {
     protected string $type = 'disk_usage';
 

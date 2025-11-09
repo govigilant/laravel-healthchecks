@@ -3,10 +3,10 @@
 namespace Vigilant\Healthchecks\Checks\Metrics;
 
 use Throwable;
-use Vigilant\HealthChecksBase\Checks\MetricCheck;
+use Vigilant\HealthChecksBase\Checks\Metric;
 use Vigilant\HealthChecksBase\Data\MetricData;
 
-class LogFileSizeMetric extends MetricCheck
+class LogFileSizeMetric extends Metric
 {
     protected string $type = 'log_file_size';
 

@@ -3,10 +3,10 @@
 namespace Vigilant\Healthchecks\Checks\Metrics;
 
 use Throwable;
-use Vigilant\HealthChecksBase\Checks\MetricCheck;
+use Vigilant\HealthChecksBase\Checks\Metric;
 use Vigilant\HealthChecksBase\Data\MetricData;
 
-class CpuLoadMetric extends MetricCheck
+class CpuLoadMetric extends Metric
 {
     protected string $type = 'cpu_load';
 
