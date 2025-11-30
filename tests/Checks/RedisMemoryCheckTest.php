@@ -2,10 +2,10 @@
 
 namespace Vigilant\Healthchecks\Tests\Checks;
 
-use Vigilant\Healthchecks\Tests\TestCase;
 use Illuminate\Support\Facades\Redis;
 use Mockery;
 use Vigilant\Healthchecks\Checks\RedisMemoryCheck;
+use Vigilant\Healthchecks\Tests\TestCase;
 use Vigilant\HealthChecksBase\Enums\Status;
 
 class RedisMemoryCheckTest extends TestCase

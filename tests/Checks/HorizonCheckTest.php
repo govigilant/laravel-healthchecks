@@ -2,8 +2,8 @@
 
 namespace Vigilant\Healthchecks\Tests\Checks;
 
-use Vigilant\Healthchecks\Tests\TestCase;
 use Vigilant\Healthchecks\Checks\HorizonCheck;
+use Vigilant\Healthchecks\Tests\TestCase;
 use Vigilant\HealthChecksBase\Enums\Status;
 
 class HorizonCheckTest extends TestCase

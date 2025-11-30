@@ -2,8 +2,8 @@
 
 namespace Vigilant\Healthchecks\Tests\Checks;
 
-use Vigilant\Healthchecks\Tests\TestCase;
 use Vigilant\Healthchecks\Checks\DebugModeCheck;
+use Vigilant\Healthchecks\Tests\TestCase;
 use Vigilant\HealthChecksBase\Enums\Status;
 
 class DebugModeCheckTest extends TestCase

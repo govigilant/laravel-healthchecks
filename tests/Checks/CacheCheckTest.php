@@ -2,10 +2,10 @@
 
 namespace Vigilant\Healthchecks\Tests\Checks;
 
-use Vigilant\Healthchecks\Tests\TestCase;
 use Illuminate\Support\Facades\Cache;
 use Mockery;
 use Vigilant\Healthchecks\Checks\CacheCheck;
+use Vigilant\Healthchecks\Tests\TestCase;
 use Vigilant\HealthChecksBase\Enums\Status;
 
 class CacheCheckTest extends TestCase

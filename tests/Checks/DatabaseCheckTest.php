@@ -2,9 +2,9 @@
 
 namespace Vigilant\Healthchecks\Tests\Checks;
 
-use Vigilant\Healthchecks\Tests\TestCase;
 use Mockery;
 use Vigilant\Healthchecks\Checks\DatabaseCheck;
+use Vigilant\Healthchecks\Tests\TestCase;
 use Vigilant\HealthChecksBase\Enums\Status;
 
 class DatabaseCheckTest extends TestCase

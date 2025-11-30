@@ -2,9 +2,9 @@
 
 namespace Vigilant\Healthchecks\Tests\Checks;
 
-use Vigilant\Healthchecks\Tests\TestCase;
 use Illuminate\Support\Facades\Cache;
 use Vigilant\Healthchecks\Checks\QueueCheck;
+use Vigilant\Healthchecks\Tests\TestCase;
 use Vigilant\HealthChecksBase\Enums\Status;
 
 class QueueCheckTest extends TestCase

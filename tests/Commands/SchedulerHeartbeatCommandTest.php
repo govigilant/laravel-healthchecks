@@ -2,9 +2,9 @@
 
 namespace Vigilant\Healthchecks\Tests\Commands;
 
-use Vigilant\Healthchecks\Tests\TestCase;
 use Illuminate\Support\Facades\Cache;
 use Mockery;
+use Vigilant\Healthchecks\Tests\TestCase;
 
 class SchedulerHeartbeatCommandTest extends TestCase
 {
