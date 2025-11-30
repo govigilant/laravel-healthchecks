@@ -1,10 +1,10 @@
 <?php
 
-namespace Vigilant\Healthchecks\Tests\Checks;
+namespace Vigilant\LaravelHealthchecks\Tests\Checks;
 
 use Illuminate\Support\Facades\Cache;
-use Vigilant\Healthchecks\Checks\QueueCheck;
-use Vigilant\Healthchecks\Tests\TestCase;
+use Vigilant\LaravelHealthchecks\Checks\QueueCheck;
+use Vigilant\LaravelHealthchecks\Tests\TestCase;
 use Vigilant\HealthChecksBase\Enums\Status;
 
 class QueueCheckTest extends TestCase

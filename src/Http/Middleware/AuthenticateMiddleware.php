@@ -1,6 +1,6 @@
 <?php
 
-namespace Vigilant\Healthchecks\Http\Middleware;
+namespace Vigilant\LaravelHealthchecks\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;

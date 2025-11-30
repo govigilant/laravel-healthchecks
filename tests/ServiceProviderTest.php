@@ -1,6 +1,6 @@
 <?php
 
-namespace Vigilant\Healthchecks\Tests;
+namespace Vigilant\LaravelHealthchecks\Tests;
 
 use Illuminate\Support\Facades\Artisan;
 

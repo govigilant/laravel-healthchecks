@@ -1,6 +1,6 @@
 <?php
 
-namespace Vigilant\Healthchecks\Checks\Metrics;
+namespace Vigilant\LaravelHealthchecks\Checks\Metrics;
 
 use Illuminate\Support\Facades\DB;
 use Throwable;

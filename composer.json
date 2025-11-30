@@ -30,12 +30,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Vigilant\\Healthchecks\\": "src"
+            "Vigilant\\LaravelHealthchecks\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Vigilant\\Healthchecks\\Tests\\": "tests"
+            "Vigilant\\LaravelHealthchecks\\Tests\\": "tests"
         }
     },
     "config": {
@@ -52,7 +52,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Vigilant\\Healthchecks\\ServiceProvider"
+                "Vigilant\\LaravelHealthchecks\\ServiceProvider"
             ]
         }
     },

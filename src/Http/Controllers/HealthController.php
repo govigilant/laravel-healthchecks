@@ -1,6 +1,6 @@
 <?php
 
-namespace Vigilant\Healthchecks\Http\Controllers;
+namespace Vigilant\LaravelHealthchecks\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;

@@ -1,11 +1,11 @@
 <?php
 
-namespace Vigilant\Healthchecks\Tests\Checks;
+namespace Vigilant\LaravelHealthchecks\Tests\Checks;
 
 use Illuminate\Support\Facades\Redis;
 use Mockery;
-use Vigilant\Healthchecks\Checks\RedisCheck;
-use Vigilant\Healthchecks\Tests\TestCase;
+use Vigilant\LaravelHealthchecks\Checks\RedisCheck;
+use Vigilant\LaravelHealthchecks\Tests\TestCase;
 use Vigilant\HealthChecksBase\Enums\Status;
 
 class RedisCheckTest extends TestCase

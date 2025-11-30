@@ -1,6 +1,6 @@
 <?php
 
-namespace Vigilant\Healthchecks\Checks;
+namespace Vigilant\LaravelHealthchecks\Checks;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;

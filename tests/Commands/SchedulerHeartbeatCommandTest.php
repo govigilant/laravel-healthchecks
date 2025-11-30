@@ -1,10 +1,10 @@
 <?php
 
-namespace Vigilant\Healthchecks\Tests\Commands;
+namespace Vigilant\LaravelHealthchecks\Tests\Commands;
 
 use Illuminate\Support\Facades\Cache;
 use Mockery;
-use Vigilant\Healthchecks\Tests\TestCase;
+use Vigilant\LaravelHealthchecks\Tests\TestCase;
 
 class SchedulerHeartbeatCommandTest extends TestCase
 {

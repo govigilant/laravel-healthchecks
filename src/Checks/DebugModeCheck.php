@@ -1,6 +1,6 @@
 <?php
 
-namespace Vigilant\Healthchecks\Checks;
+namespace Vigilant\LaravelHealthchecks\Checks;
 
 use Throwable;
 use Vigilant\HealthChecksBase\Checks\Check;

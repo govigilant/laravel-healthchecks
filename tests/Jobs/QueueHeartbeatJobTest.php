@@ -1,10 +1,10 @@
 <?php
 
-namespace Vigilant\Healthchecks\Tests\Jobs;
+namespace Vigilant\LaravelHealthchecks\Tests\Jobs;
 
 use Illuminate\Support\Facades\Cache;
-use Vigilant\Healthchecks\Jobs\QueueHeartbeatJob;
-use Vigilant\Healthchecks\Tests\TestCase;
+use Vigilant\LaravelHealthchecks\Jobs\QueueHeartbeatJob;
+use Vigilant\LaravelHealthchecks\Tests\TestCase;
 
 class QueueHeartbeatJobTest extends TestCase
 {

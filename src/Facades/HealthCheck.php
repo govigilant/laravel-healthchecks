@@ -1,6 +1,6 @@
 <?php
 
-namespace Vigilant\Healthchecks\Facades;
+namespace Vigilant\LaravelHealthchecks\Facades;
 
 use Illuminate\Support\Facades\Facade;
 use Vigilant\HealthChecksBase\Checks\Check;
@@ -14,7 +14,7 @@ use Vigilant\HealthChecksBase\Checks\Metric;
  * @method static array getMetrics()
  * @method static void clear()
  *
- * @see \Vigilant\Healthchecks\HealthCheckRegistry
+ * @see \Vigilant\LaravelHealthchecks\HealthCheckRegistry
  */
 class HealthCheck extends Facade
 {

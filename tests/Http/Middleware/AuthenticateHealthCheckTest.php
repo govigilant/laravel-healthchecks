@@ -1,8 +1,8 @@
 <?php
 
-namespace Vigilant\Healthchecks\Tests\Http\Middleware;
+namespace Vigilant\LaravelHealthchecks\Tests\Http\Middleware;
 
-use Vigilant\Healthchecks\Tests\TestCase;
+use Vigilant\LaravelHealthchecks\Tests\TestCase;
 
 class AuthenticateHealthCheckTest extends TestCase
 {

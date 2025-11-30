@@ -1,6 +1,6 @@
 <?php
 
-namespace Vigilant\Healthchecks;
+namespace Vigilant\LaravelHealthchecks;
 
 use Vigilant\HealthChecksBase\Checks\Check;
 use Vigilant\HealthChecksBase\Checks\Metric;

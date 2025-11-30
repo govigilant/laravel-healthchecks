@@ -1,9 +1,9 @@
 <?php
 
-namespace Vigilant\Healthchecks\Tests;
+namespace Vigilant\LaravelHealthchecks\Tests;
 
 use Orchestra\Testbench\TestCase as BaseTestCase;
-use Vigilant\Healthchecks\ServiceProvider;
+use Vigilant\LaravelHealthchecks\ServiceProvider;
 
 class TestCase extends BaseTestCase
 {

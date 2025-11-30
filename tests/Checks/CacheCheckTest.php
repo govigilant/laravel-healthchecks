@@ -1,11 +1,11 @@
 <?php
 
-namespace Vigilant\Healthchecks\Tests\Checks;
+namespace Vigilant\LaravelHealthchecks\Tests\Checks;
 
 use Illuminate\Support\Facades\Cache;
 use Mockery;
-use Vigilant\Healthchecks\Checks\CacheCheck;
-use Vigilant\Healthchecks\Tests\TestCase;
+use Vigilant\LaravelHealthchecks\Checks\CacheCheck;
+use Vigilant\LaravelHealthchecks\Tests\TestCase;
 use Vigilant\HealthChecksBase\Enums\Status;
 
 class CacheCheckTest extends TestCase

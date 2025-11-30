@@ -1,9 +1,9 @@
 <?php
 
-namespace Vigilant\Healthchecks\Tests\Checks\Metrics;
+namespace Vigilant\LaravelHealthchecks\Tests\Checks\Metrics;
 
-use Vigilant\Healthchecks\Checks\Metrics\DatabaseSizeMetric;
-use Vigilant\Healthchecks\Tests\TestCase;
+use Vigilant\LaravelHealthchecks\Checks\Metrics\DatabaseSizeMetric;
+use Vigilant\LaravelHealthchecks\Tests\TestCase;
 
 class DatabaseSizeMetricTest extends TestCase
 {

@@ -35,7 +35,7 @@ VIGILANT_HEALTHCHECK_TOKEN=your-vigilant-api-key-here
 Optionally publish the configuration if ou want to adjust default behavior:
 
 ```bash
-php artisan vendor:publish --provider="Vigilant\Healthchecks\ServiceProvider"
+php artisan vendor:publish --provider="Vigilant\LaravelHealthchecks\ServiceProvider"
 ```
 
 This creates `config/vigilant-healthchecks.php`.
@@ -73,15 +73,15 @@ Register health checks and metrics in your `AppServiceProvider`'s `boot` method.
 > **Note:** The package comes with defaults, so you may not need to register any checks or metrics manually when having the `register` setting enabled in the config file.
 
 ```php
-use Vigilant\Healthchecks\Facades\HealthCheck;
-use Vigilant\Healthchecks\Checks\DatabaseCheck;
-use Vigilant\Healthchecks\Checks\CacheCheck;
-use Vigilant\Healthchecks\Checks\RedisCheck;
-use Vigilant\Healthchecks\Checks\HorizonCheck;
-use Vigilant\Healthchecks\Checks\SchedulerCheck;
-use Vigilant\Healthchecks\Checks\Metrics\CpuLoadMetric;
-use Vigilant\Healthchecks\Checks\Metrics\MemoryUsageMetric;
-use Vigilant\Healthchecks\Checks\Metrics\DiskUsageMetric;
+use Vigilant\LaravelHealthchecks\Facades\HealthCheck;
+use Vigilant\LaravelHealthchecks\Checks\DatabaseCheck;
+use Vigilant\LaravelHealthchecks\Checks\CacheCheck;
+use Vigilant\LaravelHealthchecks\Checks\RedisCheck;
+use Vigilant\LaravelHealthchecks\Checks\HorizonCheck;
+use Vigilant\LaravelHealthchecks\Checks\SchedulerCheck;
+use Vigilant\LaravelHealthchecks\Checks\Metrics\CpuLoadMetric;
+use Vigilant\LaravelHealthchecks\Checks\Metrics\MemoryUsageMetric;
+use Vigilant\LaravelHealthchecks\Checks\Metrics\DiskUsageMetric;
 
 public function boot(): void
 {
@@ -102,10 +102,10 @@ public function boot(): void
 If you want to check non-default connections you can register healthchecks yourself in your service provider.
 
 ```php
-use Vigilant\Healthchecks\Facades\HealthCheck;
-use Vigilant\Healthchecks\Checks\DatabaseCheck;
-use Vigilant\Healthchecks\Checks\CacheCheck;
-use Vigilant\Healthchecks\Checks\RedisCheck;
+use Vigilant\LaravelHealthchecks\Facades\HealthCheck;
+use Vigilant\LaravelHealthchecks\Checks\DatabaseCheck;
+use Vigilant\LaravelHealthchecks\Checks\CacheCheck;
+use Vigilant\LaravelHealthchecks\Checks\RedisCheck;
 
 public function boot(): void
 {

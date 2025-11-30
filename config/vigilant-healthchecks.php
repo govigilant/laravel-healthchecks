@@ -1,6 +1,6 @@
 <?php
 
-use Vigilant\Healthchecks\Http\Middleware\AuthenticateMiddleware;
+use Vigilant\LaravelHealthchecks\Http\Middleware\AuthenticateMiddleware;
 
 return [
 

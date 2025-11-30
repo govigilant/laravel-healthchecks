@@ -1,6 +1,6 @@
 <?php
 
-namespace Vigilant\Healthchecks\Jobs;
+namespace Vigilant\LaravelHealthchecks\Jobs;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;

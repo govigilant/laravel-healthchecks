@@ -1,10 +1,10 @@
 <?php
 
-namespace Vigilant\Healthchecks\Tests\Checks;
+namespace Vigilant\LaravelHealthchecks\Tests\Checks;
 
 use Mockery;
-use Vigilant\Healthchecks\Checks\DatabaseCheck;
-use Vigilant\Healthchecks\Tests\TestCase;
+use Vigilant\LaravelHealthchecks\Checks\DatabaseCheck;
+use Vigilant\LaravelHealthchecks\Tests\TestCase;
 use Vigilant\HealthChecksBase\Enums\Status;
 
 class DatabaseCheckTest extends TestCase
