@@ -5,13 +5,13 @@ namespace Vigilant\LaravelHealthchecks;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
-use Vigilant\LaravelHealthchecks\Checks\QueueCheck;
-use Vigilant\LaravelHealthchecks\Facades\HealthCheck;
-use Vigilant\LaravelHealthchecks\Jobs\QueueHeartbeatJob;
 use Vigilant\HealthChecksBase\Checks\DiskSpaceCheck;
 use Vigilant\HealthChecksBase\Checks\Metrics\CpuLoadMetric;
 use Vigilant\HealthChecksBase\Checks\Metrics\DiskUsageMetric;
 use Vigilant\HealthChecksBase\Checks\Metrics\MemoryUsageMetric;
+use Vigilant\LaravelHealthchecks\Checks\QueueCheck;
+use Vigilant\LaravelHealthchecks\Facades\HealthCheck;
+use Vigilant\LaravelHealthchecks\Jobs\QueueHeartbeatJob;
 
 class ServiceProvider extends BaseServiceProvider
 {

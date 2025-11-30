@@ -2,9 +2,9 @@
 
 namespace Vigilant\LaravelHealthchecks\Tests\Checks;
 
+use Vigilant\HealthChecksBase\Enums\Status;
 use Vigilant\LaravelHealthchecks\Checks\DebugModeCheck;
 use Vigilant\LaravelHealthchecks\Tests\TestCase;
-use Vigilant\HealthChecksBase\Enums\Status;
 
 class DebugModeCheckTest extends TestCase
 {

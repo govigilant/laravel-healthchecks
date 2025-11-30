@@ -4,9 +4,9 @@ namespace Vigilant\LaravelHealthchecks\Tests\Checks;
 
 use Illuminate\Support\Facades\Cache;
 use Mockery;
+use Vigilant\HealthChecksBase\Enums\Status;
 use Vigilant\LaravelHealthchecks\Checks\SchedulerCheck;
 use Vigilant\LaravelHealthchecks\Tests\TestCase;
-use Vigilant\HealthChecksBase\Enums\Status;
 
 class SchedulerCheckTest extends TestCase
 {

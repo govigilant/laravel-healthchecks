@@ -3,9 +3,9 @@
 namespace Vigilant\LaravelHealthchecks\Tests\Checks;
 
 use Mockery;
+use Vigilant\HealthChecksBase\Enums\Status;
 use Vigilant\LaravelHealthchecks\Checks\DatabaseCheck;
 use Vigilant\LaravelHealthchecks\Tests\TestCase;
-use Vigilant\HealthChecksBase\Enums\Status;
 
 class DatabaseCheckTest extends TestCase
 {

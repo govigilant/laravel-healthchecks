@@ -2,9 +2,9 @@
 
 namespace Vigilant\LaravelHealthchecks\Tests\Checks;
 
+use Vigilant\HealthChecksBase\Enums\Status;
 use Vigilant\LaravelHealthchecks\Checks\StorageCheck;
 use Vigilant\LaravelHealthchecks\Tests\TestCase;
-use Vigilant\HealthChecksBase\Enums\Status;
 
 class StorageCheckTest extends TestCase
 {
