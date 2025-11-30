@@ -1,7 +1,8 @@
 <?php
 
-namespace Vigilant\Healthchecks\Tests;
+namespace Vigilant\Healthchecks\Tests\Checks;
 
+use Vigilant\Healthchecks\Tests\TestCase;
 use Illuminate\Support\Facades\Cache;
 use Mockery;
 use Vigilant\Healthchecks\Checks\CacheCheck;
@@ -43,10 +44,10 @@ class CacheCheckTest extends TestCase
             ->once()
             ->andReturn(true);
 
-        $check = new CacheCheck;
+        $check = CacheCheck::make();
         $result = $check->run();
 
-        $this->assertEquals('cache_store', $result->key());
+        $this->assertNull($result->key());
         $this->assertEquals(Status::Healthy, $result->status());
         $this->assertEquals('Cache store is healthy.', $result->message());
     }
@@ -58,10 +59,10 @@ class CacheCheckTest extends TestCase
             ->with('array')
             ->andThrow(new \Exception('Connection refused'));
 
-        $check = new CacheCheck;
+        $check = CacheCheck::make();
         $result = $check->run();
 
-        $this->assertEquals('cache_store', $result->key());
+        $this->assertNull($result->key());
         $this->assertEquals(Status::Unhealthy, $result->status());
         $this->assertStringContainsString("Failed to connect to cache store 'array':", $result->message() ?? '');
     }
@@ -85,10 +86,10 @@ class CacheCheckTest extends TestCase
             ->once()
             ->andReturn(true);
 
-        $check = new CacheCheck;
+        $check = CacheCheck::make();
         $result = $check->run();
 
-        $this->assertEquals('cache_store', $result->key());
+        $this->assertNull($result->key());
         $this->assertEquals(Status::Unhealthy, $result->status());
         $this->assertEquals('Cache store is not working correctly.', $result->message());
     }
@@ -121,10 +122,10 @@ class CacheCheckTest extends TestCase
             ->once()
             ->andReturn(true);
 
-        $check = (new CacheCheck)->store('redis');
+        $check = (CacheCheck::make())->store('redis');
         $result = $check->run();
 
-        $this->assertEquals('cache_store', $result->key());
+        $this->assertEquals('redis', $result->key());
         $this->assertEquals(Status::Healthy, $result->status());
     }
 
@@ -132,7 +133,7 @@ class CacheCheckTest extends TestCase
     {
         config(['cache.default' => 'file']);
 
-        $check = new CacheCheck;
+        $check = CacheCheck::make();
 
         $this->assertTrue($check->available());
     }
@@ -141,15 +142,15 @@ class CacheCheckTest extends TestCase
     {
         config(['cache.default' => null]);
 
-        $check = new CacheCheck;
+        $check = CacheCheck::make();
 
         $this->assertFalse($check->available());
     }
 
     public function test_cache_check_key_method_returns_correct_key(): void
     {
-        $check = new CacheCheck;
+        $check = CacheCheck::make();
 
-        $this->assertEquals('cache_store', $check->key());
+        $this->assertNull($check->key());
     }
 }

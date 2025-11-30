@@ -57,6 +57,6 @@ class DatabaseCheck extends Check
 
     public function key(): ?string
     {
-        return 'database_connection';
+        return $this->connection;
     }
 }

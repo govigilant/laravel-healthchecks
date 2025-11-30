@@ -1,7 +1,8 @@
 <?php
 
-namespace Vigilant\Healthchecks\Tests;
+namespace Vigilant\Healthchecks\Tests\Checks;
 
+use Vigilant\Healthchecks\Tests\TestCase;
 use Vigilant\Healthchecks\Checks\DebugModeCheck;
 use Vigilant\HealthChecksBase\Enums\Status;
 
@@ -12,7 +13,7 @@ class DebugModeCheckTest extends TestCase
         config(['app.debug' => true]);
         config(['app.env' => 'production']);
 
-        $check = new DebugModeCheck;
+        $check = DebugModeCheck::make();
         $result = $check->run();
 
         $this->assertEquals('debug_mode', $result->type());
@@ -25,7 +26,7 @@ class DebugModeCheckTest extends TestCase
         config(['app.debug' => false]);
         config(['app.env' => 'production']);
 
-        $check = new DebugModeCheck;
+        $check = DebugModeCheck::make();
         $result = $check->run();
 
         $this->assertEquals('debug_mode', $result->type());
@@ -38,7 +39,7 @@ class DebugModeCheckTest extends TestCase
         config(['app.debug' => true]);
         config(['app.env' => 'local']);
 
-        $check = new DebugModeCheck;
+        $check = DebugModeCheck::make();
         $result = $check->run();
 
         $this->assertEquals('debug_mode', $result->type());
@@ -48,14 +49,14 @@ class DebugModeCheckTest extends TestCase
 
     public function test_debug_mode_check_is_always_available(): void
     {
-        $check = new DebugModeCheck;
+        $check = DebugModeCheck::make();
 
         $this->assertTrue($check->available());
     }
 
     public function test_debug_mode_check_type_method_returns_correct_type(): void
     {
-        $check = new DebugModeCheck;
+        $check = DebugModeCheck::make();
 
         $this->assertEquals('debug_mode', $check->type());
     }

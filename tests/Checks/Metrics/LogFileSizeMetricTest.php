@@ -9,7 +9,7 @@ class LogFileSizeMetricTest extends TestCase
 {
     public function test_log_file_size_metric_returns_value(): void
     {
-        $metric = new LogFileSizeMetric;
+        $metric = LogFileSizeMetric::make();
         $result = $metric->measure();
 
         $this->assertEquals('log_file_size', $result->type());
@@ -26,7 +26,7 @@ class LogFileSizeMetricTest extends TestCase
             'path' => storage_path('logs/nonexistent.log'),
         ]]);
 
-        $metric = new LogFileSizeMetric;
+        $metric = LogFileSizeMetric::make();
         $result = $metric->measure();
 
         $this->assertEquals('log_file_size', $result->type());
@@ -41,7 +41,7 @@ class LogFileSizeMetricTest extends TestCase
             'path' => storage_path('logs/test.log'),
         ]]);
 
-        $metric = (new LogFileSizeMetric)->channel('test');
+        $metric = (LogFileSizeMetric::make())->channel('test');
         $result = $metric->measure();
 
         $this->assertEquals('log_file_size', $result->type());
@@ -53,7 +53,7 @@ class LogFileSizeMetricTest extends TestCase
     {
         config(['logging.default' => 'stack']);
 
-        $metric = new LogFileSizeMetric;
+        $metric = LogFileSizeMetric::make();
 
         $this->assertTrue($metric->available());
     }
@@ -62,14 +62,14 @@ class LogFileSizeMetricTest extends TestCase
     {
         config(['logging.default' => null]);
 
-        $metric = new LogFileSizeMetric;
+        $metric = LogFileSizeMetric::make();
 
         $this->assertFalse($metric->available());
     }
 
     public function test_log_file_size_metric_type_method_returns_correct_type(): void
     {
-        $metric = new LogFileSizeMetric;
+        $metric = LogFileSizeMetric::make();
 
         $this->assertEquals('log_file_size', $metric->type());
     }

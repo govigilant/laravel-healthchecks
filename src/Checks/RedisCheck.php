@@ -49,7 +49,7 @@ class RedisCheck extends Check
     public function available(): bool
     {
         try {
-            return config('database.redis') !== null;
+            return config('cache.default') === 'redis' && class_exists(Redis::class);
         } catch (Throwable) {
             return false;
         }
@@ -57,6 +57,6 @@ class RedisCheck extends Check
 
     public function key(): ?string
     {
-        return 'redis_connection';
+        return $this->connection;
     }
 }

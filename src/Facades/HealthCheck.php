@@ -10,6 +10,7 @@ use Vigilant\HealthChecksBase\Checks\Metric;
  * @method static void registerCheck(Check $check)
  * @method static void registerMetric(Metric $metric)
  * @method static array getChecks()
+ * @method static bool isCheckConfigured(string $checkClass)
  * @method static array getMetrics()
  * @method static void clear()
  *

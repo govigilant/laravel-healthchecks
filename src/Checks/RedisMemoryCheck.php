@@ -89,9 +89,14 @@ class RedisMemoryCheck extends Check
     public function available(): bool
     {
         try {
-            return config('database.redis') !== null;
+            return config('cache.default') === 'redis' && class_exists(Redis::class);
         } catch (Throwable) {
             return false;
         }
+    }
+
+    public function key(): ?string
+    {
+        return $this->connection;
     }
 }

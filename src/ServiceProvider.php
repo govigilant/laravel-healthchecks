@@ -6,6 +6,7 @@ use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Vigilant\Healthchecks\Checks\QueueCheck;
+use Vigilant\Healthchecks\Facades\HealthCheck;
 use Vigilant\Healthchecks\Jobs\QueueHeartbeatJob;
 use Vigilant\HealthChecksBase\Checks\DiskSpaceCheck;
 use Vigilant\HealthChecksBase\Checks\Metrics\CpuLoadMetric;
@@ -48,8 +49,8 @@ class ServiceProvider extends BaseServiceProvider
             ->bootConfig()
             ->bootMigrations()
             ->bootCommands()
-            ->bootSchedule()
-            ->bootRegistrations();
+            ->bootRegistrations()
+            ->bootSchedule();
     }
 
     protected function bootRoutes(): static
@@ -74,7 +75,11 @@ class ServiceProvider extends BaseServiceProvider
 
     protected function bootMigrations(): static
     {
-        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        $path = __DIR__.'/../database/migrations';
+
+        if (is_dir($path)) {
+            $this->loadMigrationsFrom($path);
+        }
 
         return $this;
     }
@@ -96,7 +101,7 @@ class ServiceProvider extends BaseServiceProvider
             $this->callAfterResolving(Schedule::class, function (Schedule $schedule) {
                 $schedule->command('vigilant:scheduler-heartbeat')->everyMinute();
 
-                if ($this->isCheckConfigured(QueueCheck::class)) {
+                if (HealthCheck::isCheckConfigured(QueueCheck::class)) {
                     $schedule->job(QueueHeartbeatJob::class)->everyMinute();
                 }
             });
@@ -122,14 +127,13 @@ class ServiceProvider extends BaseServiceProvider
             Checks\StorageCheck::class,
             Checks\DebugModeCheck::class,
             Checks\HorizonCheck::class,
-            Checks\EnvCheck::class,
             Checks\SchedulerCheck::class,
             DiskSpaceCheck::class,
 
         ];
 
         foreach ($checks as $checkClass) {
-            $registry->registerCheck(new $checkClass);
+            $registry->registerCheck($checkClass::make());
         }
 
         $metrics = [
@@ -141,23 +145,9 @@ class ServiceProvider extends BaseServiceProvider
         ];
 
         foreach ($metrics as $metricClass) {
-            $registry->registerMetric(new $metricClass);
+            $registry->registerMetric($metricClass::make());
         }
 
         return $this;
-    }
-
-    protected function isCheckConfigured(string $checkClass): bool
-    {
-        $registry = app('vigilant.healthcheck');
-        $checks = $registry->getChecks();
-
-        foreach ($checks as $check) {
-            if ($check instanceof $checkClass) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }

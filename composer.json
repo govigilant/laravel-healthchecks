@@ -1,6 +1,6 @@
 {
-    "name": "govigilant/vigilant-laravel-healthchecks",
-    "description": "A Laravel package to integrate Vigilant healthchecks",
+    "name": "govigilant/laravel-healthchecks",
+    "description": "A Laravel package to add healthchecks which can be integrated with govigilant.io",
     "keywords": [
         "vigilant",
         "laravel",

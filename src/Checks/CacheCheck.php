@@ -73,6 +73,6 @@ class CacheCheck extends Check
 
     public function key(): ?string
     {
-        return 'cache_store';
+        return $this->store;
     }
 }

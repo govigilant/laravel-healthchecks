@@ -9,7 +9,7 @@ class DatabaseSizeMetricTest extends TestCase
 {
     public function test_database_size_metric_returns_value(): void
     {
-        $metric = new DatabaseSizeMetric;
+        $metric = DatabaseSizeMetric::make();
         $result = $metric->measure();
 
         $this->assertEquals('database_size', $result->type());
@@ -20,7 +20,7 @@ class DatabaseSizeMetricTest extends TestCase
 
     public function test_database_size_metric_can_use_specific_connection(): void
     {
-        $metric = (new DatabaseSizeMetric)->connection('testing');
+        $metric = (DatabaseSizeMetric::make())->connection('testing');
         $result = $metric->measure();
 
         $this->assertEquals('database_size', $result->type());
@@ -33,7 +33,7 @@ class DatabaseSizeMetricTest extends TestCase
     {
         config(['database.default' => 'testing']);
 
-        $metric = new DatabaseSizeMetric;
+        $metric = DatabaseSizeMetric::make();
 
         $this->assertTrue($metric->available());
     }
@@ -42,14 +42,14 @@ class DatabaseSizeMetricTest extends TestCase
     {
         config(['database.default' => null]);
 
-        $metric = new DatabaseSizeMetric;
+        $metric = DatabaseSizeMetric::make();
 
         $this->assertFalse($metric->available());
     }
 
     public function test_database_size_metric_type_method_returns_correct_type(): void
     {
-        $metric = new DatabaseSizeMetric;
+        $metric = DatabaseSizeMetric::make();
 
         $this->assertEquals('database_size', $metric->type());
     }

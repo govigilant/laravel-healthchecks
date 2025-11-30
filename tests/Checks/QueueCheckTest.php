@@ -1,7 +1,8 @@
 <?php
 
-namespace Vigilant\Healthchecks\Tests;
+namespace Vigilant\Healthchecks\Tests\Checks;
 
+use Vigilant\Healthchecks\Tests\TestCase;
 use Illuminate\Support\Facades\Cache;
 use Vigilant\Healthchecks\Checks\QueueCheck;
 use Vigilant\HealthChecksBase\Enums\Status;
@@ -15,7 +16,7 @@ class QueueCheckTest extends TestCase
             ->with('vigilant_queue_heartbeat')
             ->andReturn(null);
 
-        $check = new QueueCheck;
+        $check = QueueCheck::make();
         $result = $check->run();
 
         $this->assertEquals('queue', $result->type());
@@ -30,7 +31,7 @@ class QueueCheckTest extends TestCase
             ->with('vigilant_queue_heartbeat')
             ->andReturn(now()->timestamp);
 
-        $check = new QueueCheck;
+        $check = QueueCheck::make();
         $result = $check->run();
 
         $this->assertEquals('queue', $result->type());
@@ -47,7 +48,7 @@ class QueueCheckTest extends TestCase
             ->with('vigilant_queue_heartbeat')
             ->andReturn($oldTimestamp);
 
-        $check = new QueueCheck(maxMinutesSinceLastRun: 2);
+        $check = QueueCheck::make(maxMinutesSinceLastRun: 2);
         $result = $check->run();
 
         $this->assertEquals('queue', $result->type());
@@ -65,7 +66,7 @@ class QueueCheckTest extends TestCase
             ->with('vigilant_queue_heartbeat')
             ->andReturn($timestamp);
 
-        $check = new QueueCheck(maxMinutesSinceLastRun: 5);
+        $check = QueueCheck::make(maxMinutesSinceLastRun: 5);
         $result = $check->run();
 
         $this->assertEquals('queue', $result->type());
@@ -74,14 +75,14 @@ class QueueCheckTest extends TestCase
 
     public function test_queue_check_is_available(): void
     {
-        $check = new QueueCheck;
+        $check = QueueCheck::make();
 
         $this->assertTrue($check->available());
     }
 
     public function test_queue_check_type_method_returns_correct_type(): void
     {
-        $check = new QueueCheck;
+        $check = QueueCheck::make();
 
         $this->assertEquals('queue', $check->type());
     }

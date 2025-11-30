@@ -25,17 +25,39 @@ class SchedulerCheck extends Check
     {
         try {
             $lastHeartbeat = Cache::get('vigilant_scheduler_heartbeat');
+            $missingSinceKey = 'vigilant_scheduler_missing_since';
+            $now = now()->timestamp;
 
             if ($lastHeartbeat === null) {
+                $missingSince = Cache::get($missingSinceKey);
+
+                if ($missingSince === null) {
+                    $missingSince = $now;
+                    Cache::forever($missingSinceKey, $missingSince);
+                }
+
+                $minutesSinceMissing = ($now - $missingSince) / 60;
+
+                if ($minutesSinceMissing > $this->maxMinutesSinceLastRun) {
+                    return ResultData::make([
+                        'type' => $this->type(),
+                        'key' => $this->key(),
+                        'status' => Status::Unhealthy,
+                        'message' => 'Scheduler has never run.',
+                    ]);
+                }
+
                 return ResultData::make([
                     'type' => $this->type(),
                     'key' => $this->key(),
-                    'status' => Status::Unhealthy,
-                    'message' => 'Scheduler has never run.',
+                    'status' => Status::Healthy,
+                    'message' => 'Scheduler has not run yet but is still within the grace period.',
                 ]);
             }
 
-            $minutesSinceLastRun = (now()->timestamp - $lastHeartbeat) / 60;
+            Cache::forget($missingSinceKey);
+
+            $minutesSinceLastRun = ($now - $lastHeartbeat) / 60;
 
             if ($minutesSinceLastRun > $this->maxMinutesSinceLastRun) {
                 return ResultData::make([
@@ -68,10 +90,5 @@ class SchedulerCheck extends Check
     public function available(): bool
     {
         return true;
-    }
-
-    public function key(): ?string
-    {
-        return 'scheduler';
     }
 }

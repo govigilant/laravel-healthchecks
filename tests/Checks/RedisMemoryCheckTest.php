@@ -1,7 +1,8 @@
 <?php
 
-namespace Vigilant\Healthchecks\Tests;
+namespace Vigilant\Healthchecks\Tests\Checks;
 
+use Vigilant\Healthchecks\Tests\TestCase;
 use Illuminate\Support\Facades\Redis;
 use Mockery;
 use Vigilant\Healthchecks\Checks\RedisMemoryCheck;
@@ -31,7 +32,7 @@ class RedisMemoryCheckTest extends TestCase
             ->with(null)
             ->andReturn($mockRedis);
 
-        $check = new RedisMemoryCheck;
+        $check = RedisMemoryCheck::make();
         $result = $check->run();
 
         $this->assertEquals('redis_memory', $result->type());
@@ -55,7 +56,7 @@ class RedisMemoryCheckTest extends TestCase
             ->with(null)
             ->andReturn($mockRedis);
 
-        $check = new RedisMemoryCheck;
+        $check = RedisMemoryCheck::make();
         $result = $check->run();
 
         $this->assertEquals('redis_memory', $result->type());
@@ -79,7 +80,7 @@ class RedisMemoryCheckTest extends TestCase
             ->with(null)
             ->andReturn($mockRedis);
 
-        $check = new RedisMemoryCheck(warningThresholdPercentage: 80);
+        $check = RedisMemoryCheck::make(warningThresholdPercentage: 80);
         $result = $check->run();
 
         $this->assertEquals('redis_memory', $result->type());
@@ -103,7 +104,7 @@ class RedisMemoryCheckTest extends TestCase
             ->with(null)
             ->andReturn($mockRedis);
 
-        $check = new RedisMemoryCheck;
+        $check = RedisMemoryCheck::make();
         $result = $check->run();
 
         $this->assertEquals('redis_memory', $result->type());
@@ -127,7 +128,7 @@ class RedisMemoryCheckTest extends TestCase
             ->with('custom')
             ->andReturn($mockRedis);
 
-        $check = new RedisMemoryCheck('custom');
+        $check = RedisMemoryCheck::make('custom');
         $result = $check->run();
 
         $this->assertEquals('redis_memory', $result->type());
@@ -137,25 +138,25 @@ class RedisMemoryCheckTest extends TestCase
 
     public function test_redis_memory_check_is_available_when_redis_configured(): void
     {
-        config(['database.redis' => ['client' => 'phpredis']]);
+        config(['cache.default' => 'redis']);
 
-        $check = new RedisMemoryCheck;
+        $check = RedisMemoryCheck::make();
 
         $this->assertTrue($check->available());
     }
 
     public function test_redis_memory_check_is_not_available_when_redis_not_configured(): void
     {
-        config(['database.redis' => null]);
+        config(['cache.default' => 'file']);
 
-        $check = new RedisMemoryCheck;
+        $check = RedisMemoryCheck::make();
 
         $this->assertFalse($check->available());
     }
 
     public function test_redis_memory_check_type_method_returns_correct_type(): void
     {
-        $check = new RedisMemoryCheck;
+        $check = RedisMemoryCheck::make();
 
         $this->assertEquals('redis_memory', $check->type());
     }

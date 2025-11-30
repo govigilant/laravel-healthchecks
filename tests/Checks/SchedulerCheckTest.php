@@ -1,7 +1,8 @@
 <?php
 
-namespace Vigilant\Healthchecks\Tests;
+namespace Vigilant\Healthchecks\Tests\Checks;
 
+use Vigilant\Healthchecks\Tests\TestCase;
 use Illuminate\Support\Facades\Cache;
 use Mockery;
 use Vigilant\Healthchecks\Checks\SchedulerCheck;
@@ -22,10 +23,15 @@ class SchedulerCheckTest extends TestCase
             ->with('vigilant_scheduler_heartbeat')
             ->andReturn(now()->timestamp);
 
-        $check = new SchedulerCheck;
+        Cache::shouldReceive('forget')
+            ->once()
+            ->with('vigilant_scheduler_missing_since')
+            ->andReturn(true);
+
+        $check = SchedulerCheck::make();
         $result = $check->run();
 
-        $this->assertEquals('scheduler', $result->key());
+        $this->assertNull($result->key());
         $this->assertEquals(Status::Healthy, $result->status());
         $this->assertEquals('Scheduler is running.', $result->message());
     }
@@ -37,10 +43,15 @@ class SchedulerCheckTest extends TestCase
             ->with('vigilant_scheduler_heartbeat')
             ->andReturn(now()->subMinutes(5)->timestamp);
 
-        $check = new SchedulerCheck;
+        Cache::shouldReceive('forget')
+            ->once()
+            ->with('vigilant_scheduler_missing_since')
+            ->andReturn(true);
+
+        $check = SchedulerCheck::make();
         $result = $check->run();
 
-        $this->assertEquals('scheduler', $result->key());
+        $this->assertNull($result->key());
         $this->assertEquals(Status::Unhealthy, $result->status());
         $this->assertStringContainsString('Scheduler last ran', $result->message() ?? '');
     }
@@ -52,10 +63,15 @@ class SchedulerCheckTest extends TestCase
             ->with('vigilant_scheduler_heartbeat')
             ->andReturn(null);
 
-        $check = new SchedulerCheck;
+        Cache::shouldReceive('get')
+            ->once()
+            ->with('vigilant_scheduler_missing_since')
+            ->andReturn(now()->subMinutes(5)->timestamp);
+
+        $check = SchedulerCheck::make();
         $result = $check->run();
 
-        $this->assertEquals('scheduler', $result->key());
+        $this->assertNull($result->key());
         $this->assertEquals(Status::Unhealthy, $result->status());
         $this->assertEquals('Scheduler has never run.', $result->message());
     }
@@ -67,10 +83,15 @@ class SchedulerCheckTest extends TestCase
             ->with('vigilant_scheduler_heartbeat')
             ->andReturn(now()->subMinutes(3)->timestamp);
 
-        $check = (new SchedulerCheck)->maxMinutesSinceLastRun(5);
+        Cache::shouldReceive('forget')
+            ->once()
+            ->with('vigilant_scheduler_missing_since')
+            ->andReturn(true);
+
+        $check = (SchedulerCheck::make())->maxMinutesSinceLastRun(5);
         $result = $check->run();
 
-        $this->assertEquals('scheduler', $result->key());
+        $this->assertNull($result->key());
         $this->assertEquals(Status::Healthy, $result->status());
     }
 
@@ -81,25 +102,25 @@ class SchedulerCheckTest extends TestCase
             ->with('vigilant_scheduler_heartbeat')
             ->andThrow(new \Exception('Cache error'));
 
-        $check = new SchedulerCheck;
+        $check = SchedulerCheck::make();
         $result = $check->run();
 
-        $this->assertEquals('scheduler', $result->key());
+        $this->assertNull($result->key());
         $this->assertEquals(Status::Unhealthy, $result->status());
         $this->assertStringContainsString('Failed to check scheduler status:', $result->message() ?? '');
     }
 
     public function test_scheduler_check_is_always_available(): void
     {
-        $check = new SchedulerCheck;
+        $check = SchedulerCheck::make();
 
         $this->assertTrue($check->available());
     }
 
     public function test_scheduler_check_key_method_returns_correct_key(): void
     {
-        $check = new SchedulerCheck;
+        $check = SchedulerCheck::make();
 
-        $this->assertEquals('scheduler', $check->key());
+        $this->assertNull($check->key());
     }
 }

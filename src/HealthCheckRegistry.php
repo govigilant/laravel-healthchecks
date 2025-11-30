@@ -31,6 +31,17 @@ class HealthCheckRegistry
         return $this->checks;
     }
 
+    public function isCheckConfigured(string $checkClass): bool
+    {
+        foreach ($this->checks as $check) {
+            if ($check instanceof $checkClass) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     /**
      * @return array<Metric>
      */

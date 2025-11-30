@@ -1,7 +1,8 @@
 <?php
 
-namespace Vigilant\Healthchecks\Tests;
+namespace Vigilant\Healthchecks\Tests\Checks;
 
+use Vigilant\Healthchecks\Tests\TestCase;
 use Mockery;
 use Vigilant\Healthchecks\Checks\DatabaseCheck;
 use Vigilant\HealthChecksBase\Enums\Status;
@@ -16,10 +17,10 @@ class DatabaseCheckTest extends TestCase
 
     public function test_database_check_returns_healthy_when_connection_succeeds(): void
     {
-        $check = new DatabaseCheck;
+        $check = DatabaseCheck::make();
         $result = $check->run();
 
-        $this->assertEquals('database_connection', $result->key());
+        $this->assertNull($result->key());
         $this->assertEquals(Status::Healthy, $result->status());
         $this->assertEquals('Database connection is healthy.', $result->message());
     }
@@ -35,20 +36,20 @@ class DatabaseCheckTest extends TestCase
             'password' => 'invalid',
         ]]);
 
-        $check = (new DatabaseCheck)->connection('invalid');
+        $check = (DatabaseCheck::make())->connection('invalid');
         $result = $check->run();
 
-        $this->assertEquals('database_connection', $result->key());
+        $this->assertEquals('invalid', $result->key());
         $this->assertEquals(Status::Unhealthy, $result->status());
         $this->assertStringContainsString("Failed to connect to database 'invalid':", $result->message() ?? '');
     }
 
     public function test_database_check_can_test_specific_connection(): void
     {
-        $check = (new DatabaseCheck)->connection('testing');
+        $check = (DatabaseCheck::make())->connection('testing');
         $result = $check->run();
 
-        $this->assertEquals('database_connection', $result->key());
+        $this->assertEquals('testing', $result->key());
         $this->assertEquals(Status::Healthy, $result->status());
     }
 
@@ -56,7 +57,7 @@ class DatabaseCheckTest extends TestCase
     {
         config(['database.default' => 'testing']);
 
-        $check = new DatabaseCheck;
+        $check = DatabaseCheck::make();
 
         $this->assertTrue($check->available());
     }
@@ -65,15 +66,15 @@ class DatabaseCheckTest extends TestCase
     {
         config(['database.default' => null]);
 
-        $check = new DatabaseCheck;
+        $check = DatabaseCheck::make();
 
         $this->assertFalse($check->available());
     }
 
     public function test_database_check_key_method_returns_correct_key(): void
     {
-        $check = new DatabaseCheck;
+        $check = DatabaseCheck::make();
 
-        $this->assertEquals('database_connection', $check->key());
+        $this->assertNull($check->key());
     }
 }

@@ -1,7 +1,8 @@
 <?php
 
-namespace Vigilant\Healthchecks\Tests;
+namespace Vigilant\Healthchecks\Tests\Checks;
 
+use Vigilant\Healthchecks\Tests\TestCase;
 use Illuminate\Support\Facades\Redis;
 use Mockery;
 use Vigilant\Healthchecks\Checks\RedisCheck;
@@ -26,10 +27,10 @@ class RedisCheckTest extends TestCase
             ->once()
             ->andReturn(true);
 
-        $check = new RedisCheck;
+        $check = RedisCheck::make();
         $result = $check->run();
 
-        $this->assertEquals('redis_connection', $result->key());
+        $this->assertNull($result->key());
         $this->assertEquals(Status::Healthy, $result->status());
         $this->assertEquals('Redis connection is healthy.', $result->message());
     }
@@ -41,10 +42,10 @@ class RedisCheckTest extends TestCase
             ->with(null)
             ->andThrow(new \Exception('Connection refused'));
 
-        $check = new RedisCheck;
+        $check = RedisCheck::make();
         $result = $check->run();
 
-        $this->assertEquals('redis_connection', $result->key());
+        $this->assertNull($result->key());
         $this->assertEquals(Status::Unhealthy, $result->status());
         $this->assertStringContainsString('Failed to connect to Redis:', $result->message() ?? '');
     }
@@ -60,35 +61,35 @@ class RedisCheckTest extends TestCase
             ->once()
             ->andReturn(true);
 
-        $check = (new RedisCheck)->connection('cache');
+        $check = (RedisCheck::make())->connection('cache');
         $result = $check->run();
 
-        $this->assertEquals('redis_connection', $result->key());
+        $this->assertEquals('cache', $result->key());
         $this->assertEquals(Status::Healthy, $result->status());
     }
 
     public function test_redis_check_is_available_when_redis_configured(): void
     {
-        config(['database.redis' => ['default' => ['host' => '127.0.0.1']]]);
+        config(['cache.default' => 'redis']);
 
-        $check = new RedisCheck;
+        $check = RedisCheck::make();
 
         $this->assertTrue($check->available());
     }
 
     public function test_redis_check_is_not_available_when_no_redis_configured(): void
     {
-        config(['database.redis' => null]);
+        config(['cache.default' => 'file']);
 
-        $check = new RedisCheck;
+        $check = RedisCheck::make();
 
         $this->assertFalse($check->available());
     }
 
     public function test_redis_check_key_method_returns_correct_key(): void
     {
-        $check = new RedisCheck;
+        $check = RedisCheck::make();
 
-        $this->assertEquals('redis_connection', $check->key());
+        $this->assertNull($check->key());
     }
 }

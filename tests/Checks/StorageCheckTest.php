@@ -1,7 +1,8 @@
 <?php
 
-namespace Vigilant\Healthchecks\Tests;
+namespace Vigilant\Healthchecks\Tests\Checks;
 
+use Vigilant\Healthchecks\Tests\TestCase;
 use Vigilant\Healthchecks\Checks\StorageCheck;
 use Vigilant\HealthChecksBase\Enums\Status;
 
@@ -20,7 +21,7 @@ class StorageCheckTest extends TestCase
 
     public function test_storage_check_returns_healthy_when_storage_works(): void
     {
-        $check = new StorageCheck;
+        $check = StorageCheck::make();
         $result = $check->run();
 
         $this->assertEquals('storage', $result->type());
@@ -39,7 +40,7 @@ class StorageCheckTest extends TestCase
             mkdir(storage_path('app/test'), 0755, true);
         }
 
-        $check = new StorageCheck('test_disk');
+        $check = StorageCheck::make('test_disk');
         $result = $check->run();
 
         $this->assertEquals('storage', $result->type());
@@ -55,7 +56,7 @@ class StorageCheckTest extends TestCase
     {
         config(['filesystems.default' => 'local']);
 
-        $check = new StorageCheck;
+        $check = StorageCheck::make();
 
         $this->assertTrue($check->available());
     }
@@ -64,14 +65,14 @@ class StorageCheckTest extends TestCase
     {
         config(['filesystems.default' => null]);
 
-        $check = new StorageCheck;
+        $check = StorageCheck::make();
 
         $this->assertFalse($check->available());
     }
 
     public function test_storage_check_type_method_returns_correct_type(): void
     {
-        $check = new StorageCheck;
+        $check = StorageCheck::make();
 
         $this->assertEquals('storage', $check->type());
     }

@@ -62,4 +62,9 @@ class StorageCheck extends Check
             return false;
         }
     }
+
+    public function key(): ?string
+    {
+        return $this->disk;
+    }
 }
