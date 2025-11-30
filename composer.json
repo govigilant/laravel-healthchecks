@@ -44,6 +44,11 @@
             "pestphp/pest-plugin": true
         }
     },
+    "archive": {
+        "exclude": [
+            "devenv"
+        ]
+    },
     "extra": {
         "laravel": {
             "providers": [

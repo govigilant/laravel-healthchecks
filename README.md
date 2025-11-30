@@ -1,5 +1,12 @@
 # Vigilant Laravel Healthchecks
 
+<p>
+    <a href="https://github.com/govigilant/laravel-healthchecks"><img src="https://img.shields.io/github/actions/workflow/status/govigilant/laravel-healthchecks/tests.yml?label=tests&style=flat-square" alt="Tests"></a>
+    <a href="https://github.com/govigilant/laravel-healthchecks"><img src="https://img.shields.io/github/actions/workflow/status/govigilant/laravel-healthchecks/analyse.yml?label=analysis&style=flat-square" alt="Analysis"></a>
+    <a href="https://github.com/govigilant/laravel-healthchecks"><img src="https://img.shields.io/github/actions/workflow/status/govigilant/laravel-healthchecks/style.yml?label=style&style=flat-square" alt="Style"></a>
+    <a href="https://packagist.org/packages/govigilant/laravel-healthchecks"><img src="https://img.shields.io/packagist/dt/govigilant/laravel-healthchecks?color=blue&style=flat-square" alt="Total downloads"></a>
+</p>
+
 A package that adds healthchecks to any Laravel application and integrates seamlessly with [Vigilant](https://github.com/govigilant/vigilant).
 
 ## Features
