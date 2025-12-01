@@ -1,3 +1,7 @@
+<a href="https://github.com/govigilant/vigilant" title="Vigilant">
+    <img src="./art/banner.png" alt="Banner">
+</a>
+
 # Vigilant Laravel Healthchecks
 
 <p>

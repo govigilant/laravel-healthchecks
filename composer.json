@@ -46,7 +46,8 @@
     },
     "archive": {
         "exclude": [
-            "devenv"
+            "devenv",
+            "art"
         ]
     },
     "extra": {

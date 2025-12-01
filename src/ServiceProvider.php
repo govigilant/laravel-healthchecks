@@ -24,13 +24,7 @@ class ServiceProvider extends BaseServiceProvider
 
     protected function registerSingleton(): static
     {
-        $this->app->singleton('vigilant.healthcheck', function () {
-            return new HealthCheckRegistry;
-        });
-
-        $this->app->singleton(HealthCheckRegistry::class, function ($app) {
-            return $app->make('vigilant.healthcheck');
-        });
+        $this->app->singleton(HealthCheckRegistry::class);
 
         return $this;
     }
@@ -116,8 +110,6 @@ class ServiceProvider extends BaseServiceProvider
             return $this;
         }
 
-        $registry = app('vigilant.healthcheck');
-
         $checks = [
             Checks\DatabaseCheck::class,
             Checks\QueueCheck::class,
@@ -133,7 +125,7 @@ class ServiceProvider extends BaseServiceProvider
         ];
 
         foreach ($checks as $checkClass) {
-            $registry->registerCheck($checkClass::make());
+            HealthCheck::registerCheck($checkClass::make());
         }
 
         $metrics = [
@@ -145,7 +137,7 @@ class ServiceProvider extends BaseServiceProvider
         ];
 
         foreach ($metrics as $metricClass) {
-            $registry->registerMetric($metricClass::make());
+            HealthCheck::registerMetric($metricClass::make());
         }
 
         return $this;
