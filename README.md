@@ -141,9 +141,7 @@ If a check is not applicable, it will be skipped and not included in the results
 | **HorizonCheck** | Verifies Laravel Horizon is running |
 | **SchedulerCheck** | Ensures Laravel scheduler is active |
 | **StorageCheck** | Validates storage directory permissions |
-| **DiskSpaceCheck** | Monitors available disk space |
 | **DebugModeCheck** | Warns if debug mode is enabled in production |
-| **EnvCheck** | Validates environment configuration |
 
 ## Available Metrics
 
