@@ -15,7 +15,7 @@ A package that adds healthchecks to any Laravel application and integrates seaml
 
 ## Features
 
-This package providers an API endpoint to check the health of your Laravel application. It returns two types of checks, health checks and metrics.
+This package provides an API endpoint to check the health of your Laravel application. It returns two types of checks, health checks and metrics.
 Healthchecks are checks that indicate whether a specific part of your application is functioning correctly, while metrics provide numeric values that give insights on health over time. [Vigilant](https://github.com/govigilant/vigilant) can use these metrics to notify you of spikes or quickly increasing metrics.
 
 ## Installation
@@ -36,7 +36,7 @@ VIGILANT_HEALTHCHECK_TOKEN=your-vigilant-api-key-here
 
 > **Note:** The token is required to access the health endpoint.
 
-Optionally publish the configuration if ou want to adjust default behavior:
+Optionally publish the configuration if you want to adjust default behavior:
 
 ```bash
 php artisan vendor:publish --provider="Vigilant\LaravelHealthchecks\ServiceProvider"
@@ -46,7 +46,7 @@ This creates `config/vigilant-healthchecks.php`.
 
 ### Scheduler
 
-This package automatically schedules a command and a job to verify if your sheduler and queue workers are running.
+This package automatically schedules a command and a job to verify if your scheduler and queue workers are running.
 If you do not want or want to customize this behavior, you can disable the automatic scheduling in the config file by setting `schedule` to `false`.
 
 Ensure to schedule the `php artisan vigilant:scheduler-heartbeat` yourself if you disable automatic scheduling.
