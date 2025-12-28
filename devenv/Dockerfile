@@ -1,9 +1,9 @@
-FROM php:8.5-cli AS build
+FROM php:8.5-cli
 
 WORKDIR /srv
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends git unzip libzip-dev \
+    && apt-get install -y --no-install-recommends git unzip libzip-dev supervisor \
     && docker-php-ext-install zip pcntl \
     && pecl install redis \
     && docker-php-ext-enable redis \
@@ -21,20 +21,12 @@ RUN composer config minimum-stability dev \
     && php artisan key:generate \
     && php artisan horizon:install
 
-FROM php:8.5-cli
+RUN rm -rf /var/www/html \
+    && mv /srv/app /var/www/html \
+    && mkdir -p /var/log/supervisor
+
 WORKDIR /var/www/html
-
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends git unzip libzip-dev redis-server supervisor \
-    && docker-php-ext-install zip pcntl \
-    && pecl install redis \
-    && docker-php-ext-enable redis \
-    && rm -rf /var/lib/apt/lists/*
-
-COPY --from=build /srv/app /var/www/html
 COPY devenv/supervisord.conf /etc/supervisor/conf.d/healthchecks.conf
 
-RUN mkdir -p /var/log/supervisor
-
-EXPOSE 8000 6379
+EXPOSE 8000
 CMD ["supervisord", "-n"]
