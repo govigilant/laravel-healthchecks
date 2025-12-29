@@ -4,7 +4,7 @@ WORKDIR /srv
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends git unzip libzip-dev supervisor \
-    && docker-php-ext-install zip pcntl \
+    && docker-php-ext-install zip pcntl pdo_mysql \
     && pecl install redis \
     && docker-php-ext-enable redis \
     && rm -rf /var/lib/apt/lists/*

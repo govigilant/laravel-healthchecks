@@ -158,7 +158,7 @@ If a check is not applicable, it will be skipped and not included in the results
 A ready-to-use Docker-based development environment lives in `devenv/`.
 Ensure Docker is running, then start the stack: `docker compose -f devenv/docker-compose.yml up --build`.
 
-This will create a Laravel application and link this package for development. The bearer token is set to `testing` and can be used to access the health endpoint:
+This will create a Laravel application, link this package for development, and set the bearer token to `testing`, which can be used to access the health endpoint:
 ```shell
 curl -X POST "http://localhost:8000/api/vigilant/health" \
   -H "Authorization: Bearer testing" \
