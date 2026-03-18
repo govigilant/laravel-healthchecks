@@ -2,6 +2,7 @@
 
 namespace Vigilant\LaravelHealthchecks\Tests;
 
+use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Artisan;
 
 class ServiceProviderTest extends TestCase
@@ -25,7 +26,7 @@ class ServiceProviderTest extends TestCase
         $routeCollection = app('router')->getRoutes();
         $routes = [];
 
-        /** @var \Illuminate\Routing\Route $route */
+        /** @var Route $route */
         foreach ($routeCollection->getRoutes() as $route) {
             $routes[] = $route->uri();
         }
