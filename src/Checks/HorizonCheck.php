@@ -2,6 +2,7 @@
 
 namespace Vigilant\LaravelHealthchecks\Checks;
 
+use Laravel\Horizon\Contracts\MasterSupervisorRepository;
 use Throwable;
 use Vigilant\HealthChecksBase\Checks\Check;
 use Vigilant\HealthChecksBase\Data\ResultData;
@@ -14,7 +15,7 @@ class HorizonCheck extends Check
     public function run(): ResultData
     {
         try {
-            if (! interface_exists(\Laravel\Horizon\Contracts\MasterSupervisorRepository::class)) {
+            if (! interface_exists(MasterSupervisorRepository::class)) {
                 return ResultData::make([
                     'type' => $this->type(),
                     'status' => Status::Unhealthy,
@@ -22,7 +23,7 @@ class HorizonCheck extends Check
                 ]);
             }
 
-            $masters = app(\Laravel\Horizon\Contracts\MasterSupervisorRepository::class)->all();
+            $masters = app(MasterSupervisorRepository::class)->all();
 
             if (empty($masters)) {
                 return ResultData::make([
@@ -49,7 +50,7 @@ class HorizonCheck extends Check
     public function available(): bool
     {
         try {
-            return interface_exists(\Laravel\Horizon\Contracts\MasterSupervisorRepository::class);
+            return interface_exists(MasterSupervisorRepository::class);
         } catch (Throwable) {
             return false;
         }

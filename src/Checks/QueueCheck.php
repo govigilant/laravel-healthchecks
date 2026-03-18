@@ -2,6 +2,7 @@
 
 namespace Vigilant\LaravelHealthchecks\Checks;
 
+use Illuminate\Contracts\Queue\Queue;
 use Illuminate\Support\Facades\Cache;
 use Throwable;
 use Vigilant\HealthChecksBase\Checks\Check;
@@ -59,7 +60,7 @@ class QueueCheck extends Check
     public function available(): bool
     {
         try {
-            return interface_exists(\Illuminate\Contracts\Queue\Queue::class);
+            return interface_exists(Queue::class);
         } catch (Throwable) {
             return false;
         }

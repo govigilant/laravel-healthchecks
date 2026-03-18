@@ -5,6 +5,7 @@ namespace Vigilant\LaravelHealthchecks\Facades;
 use Illuminate\Support\Facades\Facade;
 use Vigilant\HealthChecksBase\Checks\Check;
 use Vigilant\HealthChecksBase\Checks\Metric;
+use Vigilant\LaravelHealthchecks\HealthCheckRegistry;
 
 /**
  * @method static void registerCheck(Check $check)
@@ -14,12 +15,12 @@ use Vigilant\HealthChecksBase\Checks\Metric;
  * @method static array getMetrics()
  * @method static void clear()
  *
- * @see \Vigilant\LaravelHealthchecks\HealthCheckRegistry
+ * @see HealthCheckRegistry
  */
 class HealthCheck extends Facade
 {
     protected static function getFacadeAccessor(): string
     {
-        return \Vigilant\LaravelHealthchecks\HealthCheckRegistry::class;
+        return HealthCheckRegistry::class;
     }
 }

@@ -112,7 +112,7 @@ class ServiceProvider extends BaseServiceProvider
 
         $checks = [
             Checks\DatabaseCheck::class,
-            Checks\QueueCheck::class,
+            QueueCheck::class,
             Checks\CacheCheck::class,
             Checks\RedisCheck::class,
             Checks\RedisMemoryCheck::class,
